@@ -1,0 +1,22 @@
+{
+  "name": "electron-clipboard-demo",
+  "version": "1.0.0",
+  "description": "Demo app for Electron Clipboard Native API",
+  "main": "src/main.js",
+  "scripts": {
+    "start":"electron ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashaunthomas/electron-clipboard-demo.git"
+  },
+  "author": "Ashaun Thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashaunthomas/electron-clipboard-demo/issues"
+  },
+  "homepage": "https://github.com/ashaunthomas/electron-clipboard-demo#readme",
+  "devDependencies": {
+    "electron": "^1.7.8"
+  }
+}
