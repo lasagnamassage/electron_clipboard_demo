@@ -5,7 +5,11 @@ const { app, clipboard, Tray, Menu } = electron;
 const STACK_SIZE = 5;
 
 function addToStack(item, stack ) {
-    return [item].concat(stack.length >= STACK_SIZE ? stack.slice(0,stack.length - 1) : stack)
+    if (stack.length >= STACK_SIZE)
+    {
+        stack.splice(0,1);
+    }
+    stack.push(item);
 }
 function checkClipBoardForChange(clipboard, onChange) {
     let cache = clipboard.readText();
@@ -28,6 +32,6 @@ app.on('ready', _ => {
 
     checkClipBoardForChange(clipboard, text => {
         addToStack(text, stack);
-        console.log("stack: " + stack);
+        console.log("stack", stack);
     });
 })
