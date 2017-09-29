@@ -17,10 +17,11 @@ function formatItem(item) {
         : item
 }
 
-function formatMenuTemplateForStack(stack) {
+function formatMenuTemplateForStack(clipboard, stack) {
     return stack.map((item,i) => {
         return {
-            label: `Copy: ${formatItem(item)}`
+            label: `Copy: ${formatItem(item)}`,
+            click: _ => clipboard.writeText(item)
         }
     })
 }
@@ -47,6 +48,6 @@ app.on('ready', _ => {
 
     checkClipBoardForChange(clipboard, text => {
         stack = addToStack(text, stack);
-        tray.setContextMenu(Menu.buildFromTemplate(formatMenuTemplateForStack(stack)))
+        tray.setContextMenu(Menu.buildFromTemplate(formatMenuTemplateForStack(clipboard, stack)))
     });
 })
