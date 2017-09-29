@@ -3,8 +3,13 @@ const path = require('path');
 const { app, clipboard, Tray, Menu } = electron;
 
 const STACK_SIZE = 5;
+const MAX_STRING_SIZE = 20;
 
 function addToStack(item, stack ) {
+    if (item.length > MAX_STRING_SIZE) {
+        //supply truncated version of attempted copied string
+        item = item.substr(0,MAX_STRING_SIZE) + '...';
+    }
     if (stack.length >= STACK_SIZE)
     {
         stack.splice(0,1);
