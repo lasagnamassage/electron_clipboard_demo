@@ -6,16 +6,26 @@ const STACK_SIZE = 5;
 const MAX_STRING_SIZE = 20;
 
 function addToStack(item, stack ) {
-    if (item.length > MAX_STRING_SIZE) {
-        //supply truncated version of attempted copied string
-        item = item.substr(0,MAX_STRING_SIZE) + '...';
-    }
-    if (stack.length >= STACK_SIZE)
-    {
-        stack.splice(0,1);
-    }
-    stack.push(item);
+    return [item].concat(stack.length >= STACK_SIZE 
+            ? stack.slice(0,stack.length-1)
+            : stack )
 }
+
+function formatItem(item) {
+    return item && item.length > MAX_STRING_SIZE
+        ? item.substr(0,MAX_STRING_SIZE) + '...'
+        : item
+}
+
+function formatMenuTemplateForStack(stack) {
+    return stack.map((item,i) => {
+        return {
+            label: `Copy: ${formatItem(item)}`
+        }
+    })
+}
+
+
 function checkClipBoardForChange(clipboard, onChange) {
     let cache = clipboard.readText();
     let latest;
@@ -36,7 +46,7 @@ app.on('ready', _ => {
     }]));
 
     checkClipBoardForChange(clipboard, text => {
-        addToStack(text, stack);
-        console.log("stack", stack);
+        stack = addToStack(text, stack);
+        tray.setContextMenu(Menu.buildFromTemplate(formatMenuTemplateForStack(stack)))
     });
 })
